@@ -24,7 +24,7 @@
 </template>
 <script>
 export default {
-  name: 'GysHeader',
+  name: 'gysheader',
   data(){
   	return{
   		company:{}

@@ -285,9 +285,11 @@
               let obj = {
                     isLoading:false
               }
-              const res = await this.$root.http.post('Order/GetOrderDetail', params, this,obj)
-              if(res.data.Code == '0'){
+              const res = await this.$root.http.get('Order/GetOrderDetail', params, this,obj)
+              console.log(res);
+              if(res.data.Code == 0){
                 this.allData = res.data.Data
+               
               }
 
           }

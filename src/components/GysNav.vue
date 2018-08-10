@@ -3,7 +3,7 @@
 		<div class="main_w1200 fix">
 			<div class="nav">
 				<p class="fl"><router-link :to="'home'"><img src="../assets/images/gys_logo.png"></router-link><span></span></p>
-				<div class="nav_intro fl" v-if="flag">
+				<div class="nav_intro fl" v-if="this.$root.flagrouter">
 					<dl class="nav_txt fl" >
 						<dt>上海竞赢商贸有限公司</dt>
 						<dd>KPI综合分：<b>4.98</b></dd>
@@ -24,7 +24,7 @@
 						</div>			
 					</div>
 				</div>
-				<p class="nav_name fl" v-if='!flag'>{{$route.meta.title}}</p>
+				<p class="nav_name fl" v-if='!this.$root.flagrouter'>{{$route.meta.title}}</p>
 			</div>
 		
 		</div>
@@ -32,22 +32,21 @@
 </template>
 <script>
 	export default{
-		name:'GysNav',
+		name:'gysnav',
 		data(){
 			return{
-				flag:false
+				// flag:false
 			}
 		},
-		watch:{
-			$route(to,from){
-				if(to.name=='Home'){
-					this.flag=true
-				}else{
-					this.flag=false
-
-				}
-			}
-		}
+		// watch:{
+		// 	$route(to,from){
+		// 		if(to.name=='Home'){
+		// 			this.flag=true
+		// 		}else{
+		// 			this.flag=false
+		// 		}
+		// 	}
+		// }
 		
 	}
 </script>

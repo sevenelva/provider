@@ -62,7 +62,7 @@ import KeywordsSearch from "@/components/KeywordsSearch.vue";
 import Dropdown from "@/components/Dropdown";// 下拉菜单
 import Pages from "@/components/Pages"; // 分页器
 export default {
-    name:'MyProduct',
+    name:'myproduct',
     data(){
     	return{
     		products:[

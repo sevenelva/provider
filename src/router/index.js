@@ -22,6 +22,8 @@ const Honor = () =>
     import ("@/views/honor/Honor.vue"); //荣誉
 const Login = () =>
     import ("@/views/login/Login.vue"); //登录
+const ChooHotel = () =>
+    import ("@/views/chooHotel/ChooHotel.vue"); //选择酒店    
 Vue.use(Router)
 
 export default new Router({
@@ -127,6 +129,15 @@ export default new Router({
             component:Login,
             meta: {
                 title: "登录",
+                keep: false
+            }
+        },
+        {
+            path: '/ChooHotel',
+            name: 'ChooHotel',
+            component:ChooHotel,
+            meta: {
+                title: "选择酒店",
                 keep: false
             }
         }

@@ -1,7 +1,8 @@
 <!-- by your name -->
 <template>
     <div class="keywords_search">
-        <input type="text" :placeholder="defaultPlaceholder" v-model.trim="iptValue"><div class="btn" @click="keywordsSearch">搜索</div>
+        <input type="text" :placeholder="defaultPlaceholder" v-model.trim="iptValue">
+        <div class="btn" @click="keywordsSearch">搜索</div>
     </div>
 </template>
 

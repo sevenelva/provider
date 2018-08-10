@@ -75,7 +75,8 @@ export default {
             method: 'get',
             baseURL: 'http://172.23.101.83/',
             url,
-            data: qs.stringify(params), // get 请求时带的参数
+            params,
+            // get 请求时带的参数
             timeout: 10000,
             headers: {
                  'token': This.getCookie('token')

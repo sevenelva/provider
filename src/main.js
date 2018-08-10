@@ -34,6 +34,15 @@ new Vue({
         isLoading: false,
         eventHub: new Vue(),
         http: http, // 异步请求
+        flagrouter:false
     },
-
+    watch:{
+        $route(to,from){
+            if(to.name=='Home'){
+                this.flagrouter=true
+            }else{
+                this.flagrouter=false
+            }
+        }
+    }
 })

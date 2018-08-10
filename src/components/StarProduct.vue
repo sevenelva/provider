@@ -13,7 +13,7 @@
 </template>
 <script>
 	export default{
-		name:"StarProduct",
+		name:"starproduct",
 		props:{
 			star:{
 				type:Object

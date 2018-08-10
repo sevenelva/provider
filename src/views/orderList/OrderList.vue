@@ -254,9 +254,9 @@
                     isLoading:true
                 }
                 const res = await this.$root.http.get('Order//GetOrderList', params, this,obj);
-                console.log(res);
                 if(res.data.Code==0){
                     this.dataList=res.data.Data.DataList;
+                    console.log(this.dataList);
                 } 
             },
             //获取订单状态数字

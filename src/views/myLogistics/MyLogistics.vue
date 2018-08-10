@@ -5,7 +5,7 @@
         <div class="logistics_list clearfix">
             <div class="item" v-for="(item,index) of logisticsList" 
             :key="item.Id"
-            :class="{'ipt_item':index==isEdit,'default_item':index==isDefault}">
+            :class="{'ipt_item':index==isEdit,'default_item':item.IsDefault==1}">
                 <div class="name">{{item.Contacts}}</div>
                 <input class="ipt_name"  type="text" placeholder="请输入物流公司名称" v-model="name">
                 <div class="info">
@@ -68,17 +68,14 @@
             oriData:async function(){
                 let params={};
                 let obj={
-                    isLoading:true
+                    isLoading:false
                 };
                 const res = await this.$root.http.get('/Order/MyLogistics', params, this,obj);
-                console.log(res);
+               
                 if(res.data.Code==0){
                     this.logisticsList=res.data.Data;
-                    for(var i=0;i<this.logisticsList.length;i++){
-                        if(this.logisticsList[i].IsDefault==1){
-                            this.isDefault=i;
-                        }
-                    }
+                    console.log(this.logisticsList);
+                  
                 }
                
             },
@@ -107,17 +104,14 @@
                         isLoading:false
                     };
                     const res = await this.$root.http.get('/Order/DefaultLogistics', params, this,obj);
-                    console.log(res);
-                    if(res.code==0){
-                        
+                    if(res.data.Code==0){
+                        console.log(res);
                     }
                 },
             //设置为默认
             setDefault(index,id){
                 if(this.isEdit==-1){
-                 
                     this.setDefalutInterface(id);
-                    this.oriData();
                 }
             },
             // 编辑
@@ -171,9 +165,6 @@
             //删除
             setDel(index){
                 if(this.isEdit==-1){
-                    if(index==this.isDefault){
-                        this.isDefault=0;
-                    }
                     this.logisticsList.splice(index,1);
                 }
             }
