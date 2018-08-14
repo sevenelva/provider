@@ -280,7 +280,7 @@
         methods:{
           aaa:async function() {
               let params = {
-                  OrderNo: '072700000011'
+                  OrderNo: this.$route.query.id
               }
               let obj = {
                     isLoading:false

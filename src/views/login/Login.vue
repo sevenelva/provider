@@ -54,26 +54,22 @@ export default {
   },
   mounted(){
     let loginInfo = this.getCookie('login_info');
-    if(this.autoLogin && loginInfo == true){
-      loginInfo = JSON.parse(loginInfo)
-      this.username = loginInfo.username;
-      this.password = loginInfo.password;
-      this.autoLogin = loginInfo.autoLogin;
-    }else if(this.autoLogin){
-      loginInfo = JSON.parse(loginInfo)
+    if(loginInfo){
+      loginInfo = JSON.parse(loginInfo);
       this.username = loginInfo.username;
       this.autoLogin = loginInfo.autoLogin;
-      this.password = ''
+      if(this.autoLogin){
+       this.password = loginInfo.password;
+      }else{
+        this.password = ''
+      }
     }
+    
   },
   methods:{
     // 提交
       fnSure:async function() {
-        if(this.user_err_info == '' || this.pass_err_info == ''){
-          this.fnError(1)
-          this.fnError(2)
-          return;
-        }
+        if(this.user_err_info == ''&& this.pass_err_info == ''){
           let params = {
             password:this.password,
             username:this.username
@@ -82,6 +78,7 @@ export default {
             isLoading:false
           }
           const res = await this.$root.http.post('login/CheckPwd', params, this,obj)
+          console.log(res);
           if(res.data.Code == 0){
             this.setCookie('token',res.data.Data.token)
             let setUserInfo = {
@@ -92,7 +89,10 @@ export default {
             setUserInfo = JSON.stringify(setUserInfo)
             this.setCookie('login_info',setUserInfo)
           }
-
+        }else{
+          this.fnError(1)
+          this.fnError(2)
+        }         
       },
     // 验证信息错误提示
     fnError(arg){

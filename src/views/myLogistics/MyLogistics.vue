@@ -71,7 +71,7 @@
                     isLoading:false
                 };
                 const res = await this.$root.http.get('/Order/MyLogistics', params, this,obj);
-               
+               console.log(res);
                 if(res.data.Code==0){
                     this.logisticsList=res.data.Data;
                     console.log(this.logisticsList);

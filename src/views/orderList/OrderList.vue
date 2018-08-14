@@ -272,6 +272,7 @@
                     isLoading:false
                 };
                 const res=await this.$root.http.get("/Order/OrderTypeNum",params,this,obj);
+                console.log(res);
             },
             //搜索
             keywordsSearch(iptValue){

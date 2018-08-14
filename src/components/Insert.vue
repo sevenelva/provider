@@ -15,7 +15,6 @@
         <i></i>
         <span>{{insertInfo.export}}</span>
       </li>
-
     </ul>
   </div>
 </template>
@@ -36,7 +35,7 @@ export default {
   },
   mounted() {
     let This = this
-    window.onscroll = function(){
+    window.onscroll=window.onresize= function(){
       //变量scrollTop是滚动条滚动时，距离顶部的距离
       var scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
       //变量windowHeight是可视区的高度
@@ -44,7 +43,8 @@ export default {
       //变量scrollHeight是滚动条的总高度
       var scrollHeight = document.documentElement.scrollHeight||document.body.scrollHeight;
         //滚动条到底部的条件
-        if(scrollTop+windowHeight + 122 >=scrollHeight){
+        if(scrollTop+windowHeight +214>=scrollHeight){
+        
           if(This.fixed){
             return;
           }
@@ -69,24 +69,28 @@ export default {
 </script>
 <style lang="less" scoped>
 .insert_wrap{
-  position:fixed;
-  z-index:10;
-  bottom:0px;
-  width:1200px;
   height:60px;
-  background:rgba(255,255,255,1);
-  border:1px solid rgba(235,235,235,1);
-  box-sizing: border-box;
   &.active{
-    position:static;
+    ul{
+      position:static;
+      width:1200px;
+    }
   }
   ul{
+    position:fixed;
+    z-index:10;
+    left:0;
+    bottom:0px;
+    width:100%;
+    border:1px solid rgba(235,235,235,1);
+    background:rgba(255,255,255,1);
+    box-sizing: border-box;
     li{
       height:60px;
       &.check_box{
         display:inline-block;
         margin-left:12px;
-        margin-right:33px;
+        width:87px;
         input{
           display:none;
         }
