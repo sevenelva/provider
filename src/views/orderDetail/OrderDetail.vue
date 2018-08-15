@@ -5,10 +5,11 @@
         <div class="box_status clearfix">
             <div class="side">
                 <div class="num">订单编号：{{this.$route.query.id}}</div>
-                <h3>待发货</h3>
-                <div class="btn">确认发货</div>
+                <h3>{{statusToWord(allData.SubOrderStatus)}}</h3>
+                <div class="btn" v-if="allData.SubOrderStatus==20">确认发货</div>
+                <div class="btn" v-if="allData.SubOrderStatus==36">修改开票</div>
             </div>
-            <ul class="box_step">
+            <ul class="box_step clearfix">
                 <li>
                     <div class="txt">提交订单</div>
                     <div class="date">2018-08-12 15:23:48</div>
@@ -17,22 +18,22 @@
                     <div class="txt">确认订单</div>
                     <div class="date">2018-08-12 15:23:48</div>
                 </li>
-                <li v-if="allData.OrgType='1'">
+                <li v-if="allData.OrgType=='1'">
                     <div class="txt">已收款</div>
                 </li>
                 <li>
                     <div class="txt">已发货</div>
                 </li>
-                <li v-if="allData.OrgType='1'">
+                <li v-if="allData.OrgType=='1'">
                     <div class="txt">已收货</div>
                 </li>
-                <li v-if="allData.OrgType='0'">
+                <li v-if="allData.OrgType=='0'">
                     <div class="txt">买家收货</div>
                 </li>
                 <li>
                     <div class="txt">已开票</div>
                 </li>
-                <li v-if="allData.OrgType='0'">
+                <li v-if="allData.OrgType=='0'">
                     <div class="txt">发票已审</div>
                 </li>
                 <li>
@@ -275,24 +276,51 @@
             }
         },
         mounted(){
-          this.aaa()
+            this.oriData()
         },
         methods:{
-          aaa:async function() {
-              let params = {
+            oriData:async function() {
+                let params = {
                   OrderNo: this.$route.query.id
-              }
-              let obj = {
-                    isLoading:false
-              }
-              const res = await this.$root.http.get('Order/GetOrderDetail', params, this,obj)
-              console.log(res);
-              if(res.data.Code == 0){
-                this.allData = res.data.Data
-               
-              }
-
-          }
+                }
+                let obj = {
+                        isLoading:false
+                }
+                const res = await this.$root.http.get('Order/GetOrderDetail', params, this,obj)
+                console.log(res);
+                if(res.data.Code == 0){
+                    this.allData = res.data.Data
+                }
+            },
+            //订单状态转换为文字
+            statusToWord(status) {
+                switch (status){
+                    case 0:
+                        return "已取消";
+                        break;
+                    case 16:
+                        return "待确认";
+                        break;
+                    case 20:
+                        return "待发货";
+                        break;
+                    case 24:
+                        return "待买家收货";
+                        break;
+                    case 32:
+                        return "待开票";
+                        break;
+                    case 36:
+                        return "待买家审发票";
+                        break;
+                    case 40:
+                        return "待收款";
+                        break;
+                    case 100:
+                        return "已完成";
+                        break;
+                }
+            }   
         }
     }
 
@@ -306,7 +334,6 @@
     .side{
         float:left;
         width:284px;
-        border-right:1px solid #EBEBEB;
         text-align: center;
         .num{
             padding-top:24px;
@@ -338,7 +365,9 @@
         }
     }
     .box_step{
-        margin-left:364px;
+        margin-left:287px;
+        padding:0 0 42px 76px;
+        border-left:1px solid #EBEBEB;
         li{
             position: relative;
             float:left;
@@ -477,7 +506,6 @@
         padding-top:19px;
         padding-bottom:3px;
         .title{
-            
             padding:0 0 11px 9px;
             border-bottom:1px solid #D3D3D3;
             line-height: 21px;
@@ -557,7 +585,9 @@
                 color:#535353;
                 font-size:14px;
                 text-align: center;
+                overflow: hidden;
                 .price{
+                    height:90px;
                     font-size:16px;
                     font-weight: bold;
                 }
@@ -565,6 +595,7 @@
                     float:left;
                     width:179px;
                     line-height:90px;
+                    height:90px;
                 }
                 .name{
                     float:left;

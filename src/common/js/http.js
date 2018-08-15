@@ -32,20 +32,21 @@ function checkStatus(response, This, obj) {
         msg: '网络异常'
     }
 }
-
+let baseURL= 'http://172.23.101.83/';
 function checkCode(res, This) {
-    if (res.status === -404) {
+    if (res.data.Code === -404) {
         // 请求超时
         This.$root.isLoading = false
         This.$router.push({ path: '/err', query: { 'Msg': encodeURIComponent('请求超时') } })
         return
     }
     // token 过期  或则错误
-    if (res.status === 99) {
+    if (res.data.Code === 99) {
         // 请求超时
-        This.$router.push({ path: '/login'})
+        This.$router.push({ path: '/login',query:{flag:0}})
         return
     }
+    
     return res
 }
 
@@ -53,7 +54,7 @@ export default {
     post(url, data, This, obj) {
         return axios({
             method: 'post',
-            baseURL: 'http://172.23.101.83/',
+            baseURL: baseURL,
             url,
             data: qs.stringify(data),
             timeout: 40000,
@@ -73,7 +74,7 @@ export default {
     get(url, params, This, obj) {
         return axios({
             method: 'get',
-            baseURL: 'http://172.23.101.83/',
+            baseURL: baseURL,
             url,
             params,
             // get 请求时带的参数

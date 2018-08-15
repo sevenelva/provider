@@ -34,10 +34,13 @@ new Vue({
         isLoading: false,
         eventHub: new Vue(),
         http: http, // 异步请求
-        flagrouter:false
+        flagrouter:false,
+        routerPath:""
     },
     watch:{
-        $route(to,from){
+        $route(to,from)
+        {
+            this.routerPath = from.fullPath;
             if(to.name=='Home'){
                 this.flagrouter=true
             }else{

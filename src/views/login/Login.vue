@@ -27,7 +27,7 @@
             </div>
             <a class="forget fr" href="javascript:;">忘记密码？</a>
           </div>
-          <div class="btn" @click="fnSure">登录</div>
+          <div class="btn" @click="fnSure(1)">登录</div>
       </div>
     </div>
   </div>
@@ -59,7 +59,8 @@ export default {
       this.username = loginInfo.username;
       this.autoLogin = loginInfo.autoLogin;
       if(this.autoLogin){
-       this.password = loginInfo.password;
+        this.password = loginInfo.password;
+        this.fnSure();
       }else{
         this.password = ''
       }
@@ -68,7 +69,7 @@ export default {
   },
   methods:{
     // 提交
-      fnSure:async function() {
+      fnSure:async function(flag) {
         if(this.user_err_info == ''&& this.pass_err_info == ''){
           let params = {
             password:this.password,
@@ -88,6 +89,15 @@ export default {
             }
             setUserInfo = JSON.stringify(setUserInfo)
             this.setCookie('login_info',setUserInfo)
+            if(flag === 1){
+               this.$router.push({path:"/home"})
+            }
+            if(this.autoLogin){
+              let routerPath = this.$root.routerPath
+              if(this.$route.query.flag==0){
+                this.$router.push({path:routerPath})
+              }
+            }
           }
         }else{
           this.fnError(1)

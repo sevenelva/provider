@@ -1,7 +1,11 @@
 <!-- by your name -->
 <template>
     <div class="main_report main_w1200">
-        <div class="add_report">新增质检报告</div>
+        <div class="upload">
+            <div class="add_report" @click="fileClick">新增质检报告</div>
+            <input @change="fileChange($event)" type="file" id="upload_file" multiple style="display: none" accept="image/*"/>
+        </div>
+
         <div class="report_list clearfix">
             <div class="item" v-for="(item,index) of reportList" :key="item.id">
                 <div class="btn btn_del" @click="setDel(index)">删除</div>
@@ -12,6 +16,7 @@
     </div>
 </template>
 <script type='text/ecmascript-6'>
+   import axios from 'axios'
     export default {
         name:"MyReport",
         data () {
@@ -30,7 +35,45 @@
             // 删除
             setDel(index){
                 this.reportList.splice(index,1);
+            },
+            fileClick(){
+                document.getElementById('upload_file').click()
+            },
+            fileChange(el){
+                let files = el.target.files
+                let AllowImgFileSize = 2100000;
+                let data={}
+                let count = 0;
+                for(let i=0;i<files.length;i++){
+                   let reader = new FileReader();
+                   let imgName = encodeURIComponent(files[i].name);
+                   let imgUrlBase64 = reader.readAsDataURL(files[i]);
+                    reader.onload = function (e) {
+                      //var ImgFileSize = reader.result.substring(reader.result.indexOf(",") + 1).length;//截取base64码部分（可选可不选，需要与后台沟通）
+                      if (AllowImgFileSize != 0 && AllowImgFileSize < reader.result.length) {
+                            alert( '上传失败，请上传不大于2M的图片！');
+                            return;
+                        }else{
+                            //执行上传操作
+                            data[imgName] = reader.result
+                            count ++
+                            if(count == files.length ){
+                              console.log(data)
+                              //this.imgRequest(data)
+                            }
+                        }
+                    }
+                }
+
+            },
+            imgRequest:async function(data){
+              let params = data
+              let obj={
+                isLoading:false
+              }
+              const res = await this.$root.http.get('login/CheckPwd', params, this,obj)
             }
+
         }
     }
 </script>
